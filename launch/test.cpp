@@ -3,14 +3,14 @@
 #include <iostream>
 #include <utility>
 
-class tr{
+class tr {
 public:
     tr() = default;
     
     ~tr() = default;
 };
 
-class Test{
+class Test {
     int a{};
     
     char b{};
@@ -21,42 +21,43 @@ class Test{
 
 public:
     void set(
-        int v){
+        int v) {
       a = v;
     }
     
     void set(
-        char v){
+        char v) {
       b = v;
     }
     
     void set(
-        double v){
+        double v) {
       c = v;
     }
     
     void set(
-        ::std::shared_ptr<tr> v){
+        ::std::shared_ptr<tr> v) {
       d = std::move(v);
     }
 };
 
 #include "include/launch.hpp"
 
-namespace launcher{ namespace trait{
-    template<>
-    struct bundle<int>{
-        constexpr static auto name = "int";
+namespace launcher {
+    namespace trait {
+        template<>
+        struct bundle<int> {
+            constexpr static auto name = "int";
+            
+            using type = int;
+        };
         
-        using type = int;
-    };
-
-    template<>
-    struct bundle<char>{
-        constexpr static auto name = "char";
-
-        using type = char;
-    };
+        template<>
+        struct bundle<char> {
+            constexpr static auto name = "char";
+            
+            using type = char;
+        };
 //
 //    template<>
 //    struct bundle<double>{
@@ -71,7 +72,7 @@ namespace launcher{ namespace trait{
 //
 //        using type = typename ::std::shared_ptr<tr>;
 //    };
-}  // namespace trait
+    }  // namespace trait
 }  // namespace launcher
 
 using current_launcher = launcher::launch<int, char/*, double, tr*/>;
@@ -80,31 +81,33 @@ using current_launcher = launcher::launch<int, char/*, double, tr*/>;
 
 using loder = launcher::core::framework;
 
-struct sub : private loder{
+struct sub : private loder {
     int a;
     int b;
 };
 
-struct virtual_test{
+struct virtual_test {
     virtual ~virtual_test() = 0;
     
     virtual void test() = 0;
 };
 
 template<typename T>
-struct load_polic : private T{
+struct load_polic : private T {
   
 };
 
-namespace Database{
-    template<typename t,template<class> class invoke>
-    struct _interface{
+namespace Database {
+    template<typename t, template<class>
+             class invoke>
+    struct _interface {
         using query_r_t = typename invoke<t>::query_return_t;
+        
         virtual query_r_t Query() = 0;
     };
 }
 
-int main(){
+int main() {
   ::std::cout << sizeof(virtual_test) << "\n";
   ::std::cout << sizeof(loder) << "\n";
   ::std::cout << sizeof(sub) << "\n";

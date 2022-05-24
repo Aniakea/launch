@@ -4,10 +4,13 @@
 
 #include <tuple>
 #include "launcher_def.hpp"
+
 namespace launcher {
     template<typename...t>
     struct launch final {
-        enum {size = sizeof...(t)};
+        enum {
+            size = sizeof...(t)
+        };
         using list_t = ::std::array<const char *const, size>;
     private:
         using idx_t = ::std::index_sequence_for<t...>;
