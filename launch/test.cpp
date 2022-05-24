@@ -110,8 +110,6 @@ int main(){
   ::std::cout << sizeof(sub) << "\n";
   Test rt{};
   loder framework{};
-  for(auto&& name : current_launcher::name_list)
-    ::std::cout << name <<"\n";
   current_launcher::load(framework);
   current_launcher::instance().to(rt);
 }

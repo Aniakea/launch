@@ -8,11 +8,13 @@ namespace launcher {
     template<typename...t>
     struct launch final {
         enum {size = sizeof...(t)};
-        using idx_t = ::std::index_sequence_for<t...>;
         using list_t = ::std::array<const char *const, size>;
-        constexpr static list_t name_list{trait::bundle<t>::name...};
     private:
+        using idx_t = ::std::index_sequence_for<t...>;
+        
         using container_t = ::std::tuple<typename trait::bundle<t>::type...>;
+        
+        constexpr static list_t name_list{trait::bundle<t>::name...};
         
         mutable container_t bundles{};
         
