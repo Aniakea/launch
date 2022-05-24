@@ -41,7 +41,7 @@ public:
     }
 };
 
-#include "include/launcher_def.hpp"
+#include "include/launch.hpp"
 
 namespace launcher{ namespace trait{
     template<>
@@ -50,35 +50,33 @@ namespace launcher{ namespace trait{
         
         using type = int;
     };
-    
+
     template<>
     struct bundle<char>{
         constexpr static auto name = "char";
-        
+
         using type = char;
     };
-    
-    template<>
-    struct bundle<double>{
-        constexpr static auto name = "double";
-        
-        using type = double;
-    };
-    
-    template<>
-    struct bundle<tr>{
-        constexpr static auto name = "test_class";
-        
-        using type = typename ::std::shared_ptr<tr>;
-    };
+//
+//    template<>
+//    struct bundle<double>{
+//        constexpr static auto name = "double";
+//
+//        using type = double;
+//    };
+//
+//    template<>
+//    struct bundle<tr>{
+//        constexpr static auto name = "test_class";
+//
+//        using type = typename ::std::shared_ptr<tr>;
+//    };
 }  // namespace trait
 }  // namespace launcher
 
-#include "include/detail/launch.hpp"
+using current_launcher = launcher::launch<int, char/*, double, tr*/>;
 
-using current_launcher = launcher::launch<int, char, double, tr>;
-
-#include "include/detail/framework.hpp"
+#include "include/framework.hpp"
 
 using loder = launcher::core::framework;
 
@@ -112,6 +110,8 @@ int main(){
   ::std::cout << sizeof(sub) << "\n";
   Test rt{};
   loder framework{};
+  for(auto&& name : current_launcher::name_list)
+    ::std::cout << name <<"\n";
   current_launcher::load(framework);
   current_launcher::instance().to(rt);
 }

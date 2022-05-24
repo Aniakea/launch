@@ -6,7 +6,7 @@
 #define LAUNCH_LAUNCHER_HPP
 
 #include "launcher_def.hpp"
-#include "detail/framework.hpp"
-#include "detail/launch.hpp"
+#include "framework.hpp"
+#include "launch.hpp"
 
 #endif //LAUNCH_LAUNCHER_HPP

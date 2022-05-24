@@ -3,17 +3,16 @@
 #define LAUNCH_HPP
 
 #include <tuple>
-
+#include "launcher_def.hpp"
 namespace launcher {
     template<typename...t>
     struct launch final {
         enum {size = sizeof...(t)};
         using idx_t = ::std::index_sequence_for<t...>;
         using list_t = ::std::array<const char *const, size>;
+        constexpr static list_t name_list{trait::bundle<t>::name...};
     private:
         using container_t = ::std::tuple<typename trait::bundle<t>::type...>;
-        
-        constexpr static list_t name_list{trait::bundle<t>::name...};
         
         mutable container_t bundles{};
         
@@ -39,16 +38,14 @@ namespace launcher {
         void _to_help(
             u &user_instance,
             ::std::index_sequence<idx...>) const noexcept {
-          int a[size]{(user_instance.set(::std::get<idx>(bundles)), 0)...};
-          (void) a;
+          [[maybe_unused]]int a[size]{(user_instance.set(::std::get<idx>(bundles)), 0)...};
         }
         
         template<typename rt,
                  typename framework>
         static typename trait::bundle<rt>::type _load_help(
-            framework instance) noexcept {
+            framework &&instance) noexcept {
           return instance.template load<rt>();
-//          return typename trait::bundle<rt>::type{0};
         }
     
     public:
@@ -59,10 +56,10 @@ namespace launcher {
         
         template<typename framework>
         static void load(
-            framework const &instance) noexcept {
+            framework &&instance) noexcept {
           instance.install(name_list);
           launch::instance().bundles =
-              ::std::make_tuple(_load_help<t>(instance)...);
+              ::std::make_tuple(_load_help<t>(::std::forward<framework>(instance))...);
         }
         
         template<typename U>
