@@ -4,24 +4,24 @@
 #ifndef LAUNCH_FRAMEWORK_HPP
 #define LAUNCH_FRAMEWORK_HPP
 namespace launcher {
-    namespace core {
-        // TODO : 修改为template使加载逻辑能够具备弹性变化,需要完成policy类的初步编写
-        struct framework {
-            template<::std::size_t size>
-            void install(
-                std::array<char const *const, size> const name_list) const noexcept {
-              for (auto &&name : name_list) {
-                ::std::cout << name << "\n";
-              }
-            }
-            
-            template<typename t>
-            typename launcher::trait::bundle<t>::type load() {
-              using return_t = typename launcher::trait::bundle<t>::type;
-              return_t ret{};
-              return ret;
-            }
-        };
-    }
+  namespace core {
+    // TODO : 修改为template使加载逻辑能够具备弹性变化,需要完成policy类的初步编写
+    struct framework {
+      template<typename ...t>
+      void install(
+          typename launcher::launch<t...>::list_t const& name_list) const noexcept {
+        for (auto&& name : name_list) {
+          ::std::cout << name << "\n";
+        }
+      }
+      
+      template<typename t>
+      typename launcher::trait::bundle<t>::type load() {
+        using return_t = typename launcher::trait::bundle<t>::type;
+        return_t ret{};
+        return ret;
+      }
+    };
+  }
 }
 #endif //LAUNCH_FRAMEWORK_HPP
