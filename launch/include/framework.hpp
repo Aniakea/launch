@@ -7,9 +7,9 @@ namespace launcher {
   namespace core {
     // TODO : 修改为template使加载逻辑能够具备弹性变化,需要完成policy类的初步编写
     struct framework {
-      template<typename ...t>
+      template<::std::size_t size>
       void install(
-          typename launcher::launch<t...>::list_t const& name_list) const noexcept {
+          std::array<char const *const, size> const& name_list) const noexcept {
         for (auto&& name : name_list) {
           ::std::cout << name << "\n";
         }
