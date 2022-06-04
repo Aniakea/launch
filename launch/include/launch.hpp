@@ -26,17 +26,13 @@ namespace launcher {
     ~launch() = default;
    
    public:
-    launch(
-        launch const&) = delete;
+    launch(launch const&) = delete;
     
-    launch(
-        launch&&) = delete;
+    launch(launch&&) = delete;
     
-    launch& operator=(
-        launch const&) = delete;
+    launch& operator=(launch const&) = delete;
     
-    launch& operator=(
-        launch&&) = delete;
+    launch& operator=(launch&&) = delete;
    
    private:
     template<typename u, ::std::size_t...idx>
