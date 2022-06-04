@@ -6,13 +6,13 @@
 namespace launcher {
   namespace core {
     // TODO : 修改为template使加载逻辑能够具备弹性变化,需要完成policy类的初步编写
+    template<typename tag, template<class> class policy>
     struct framework {
+      using current_policy = policy<tag>;
       template<::std::size_t size>
       void install(
           std::array<char const *const, size> const& name_list) const noexcept {
-        for (auto&& name : name_list) {
-          ::std::cout << name << "\n";
-        }
+       current_policy::template install(name_list);
       }
       
       template<typename t>
