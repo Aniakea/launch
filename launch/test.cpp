@@ -13,11 +13,11 @@ class tr {
 };
 
 class Test {
-  int a{};
+  int a{3};
   
-  char b{};
+  char b{4};
   
-  double c{};
+  double c{6.5};
   
   ::std::shared_ptr<tr> d;
  
@@ -77,16 +77,16 @@ namespace launcher {
   }  // namespace trait
 }  // namespace launcher
 
-using current_launcher = launcher::launch<int, char/*, double, tr*/>;
+using current_launcher = launcher::launch<int, char, double, tr>;
 
 #include "include/framework.hpp"
 
-using loder = launcher::core::framework;
+using loder = launcher::core::framework<tr, ::std::shared_ptr>;
 
 int main() {
-  ::std::thread t();
+//  ::std::thread t();
   Test  rt{};
   loder framework{};
-  current_launcher::load(framework);
+  //  current_launcher::load(framework);
   current_launcher::instance().to(rt);
 }
