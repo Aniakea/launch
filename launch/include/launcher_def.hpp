@@ -4,6 +4,12 @@
 
 #include <type_traits>
 
+#if __cplusplus >= 201703L
+#define INLINE_CONSTEXPR constexpr
+#else
+#define INLINE_CONSTEXPR inline constexpr
+#endif
+
 namespace launcher { namespace trait {
   template<typename B>
   struct bundle {};
