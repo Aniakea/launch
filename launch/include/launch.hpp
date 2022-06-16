@@ -19,7 +19,7 @@ namespace launcher {
     
     using container_t = ::std::tuple<typename trait::bundle<t>::type...>;
     
-    constexpr static list_t name_list{trait::bundle<t>::name...};
+    INLINE_CONSTEXPR static list_t name_list{trait::bundle<t>::name...};
     
     mutable container_t bundles{};
     
